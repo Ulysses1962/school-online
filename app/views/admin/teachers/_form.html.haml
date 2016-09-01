@@ -1,0 +1,132 @@
+= form_for [:admin, @teacher] do |f|
+  #teacher-main.panel.panel-primary
+    .panel-heading ОСНОВНА ІНФОРМАЦІЯ
+    .panel-body.panel-form
+      - if @teacher.errors.any?
+        .panel.panel-danger.panel-content
+          .panel-heading Некоректна інформація!
+          .panel-body
+            %ul
+              - @teacher.errors.messages.each do |message|
+                %li= message
+      .form-group
+        %label Школа
+        = f.select :school_id, options_for_select(@school_options, @teacher.school_id), {:include_blank => true}, {:class => "form-control"}
+      .form-group
+        %label Адреса електронної пошти
+        = f.email_field :email, class: "form-control"
+      .form-group
+        %label Ім'я користувача
+        = f.text_field :username, class: "form-control"
+      - unless @teacher.persisted?  
+        .form-group
+          %label Пароль
+          = f.password_field :password, class: "form-control", autocomplete: :on
+        .form-group
+          %label Підтвердження пароля
+          = f.password_field :password_confirmation, autocomplete: :on, class: "form-control"
+      
+      %label Предмети
+      .form-group
+        .row
+          .col-md-7      
+            = select_tag "teacher_subjects", options_for_select(@subject_names), include_blank: true, class: "form-control"
+          .col-md-5  
+            = submit_tag 'Додати', id: 'add-subject-commit', type: 'button', class: 'btn btn-primary'
+
+      #subjects-list
+        = hidden_field_tag "update_path", admin_update_subjects_path
+      %table#subjects-table.table
+        %thead
+          %tr
+            %th.col-md-1 id
+            %th.col-md-4 Назва курсу
+            %th.col-md-1 Рік
+            - if @teacher.persisted?
+              %th.col-md-1
+                Видалити
+        %tbody
+          = f.fields_for :subjects do |fs|
+            %tr
+              %td
+                = fs.text_field :id, class: "form-control s-table-control" 
+              %td
+                = fs.text_field :description, class: "form-control s-table-control"
+              %td
+                = fs.text_field :level, class: "form-control s-table-control"
+              - if @teacher.persisted?
+                %td
+                  = fs.check_box :_destroy, checked_value: "0", class: "form-control"  
+
+      %label Ролі
+      .form-group
+        .row
+          .col-md-7      
+            = select_tag "teacher_roles", options_for_select(@roles_names), include_blank: true, class: "form-control"
+          .col-md-5  
+            = submit_tag 'Додати', id: 'add-role-commit', type: 'button', class: 'btn btn-danger'
+
+      #roles-list
+        = hidden_field_tag "update_roles_path", admin_update_roles_path
+      %table#roles-table.table
+        %thead
+          %tr
+            %th.col-md-1 id
+            %th.col-md-2 Роль
+            %th.col-md-1
+            %th.col-md-1
+            - if @teacher.persisted?
+              %th.col-md-1
+                Видалити
+        %tbody
+          = f.fields_for :roles do |fr|
+            %tr
+              %td
+                = fr.text_field :id, class: "form-control s-table-control" 
+              %td
+                = fr.text_field :rolename, class: "form-control s-table-control"
+              %td
+                = f.text_field(:a_class_level, value: @a_class_level, class: "form-control") if fr.object.rolename == 'class_manager' 
+              %td
+                = f.text_field :a_class_parallel, value: @a_class_parallel, class: "form-control" if fr.object.rolename == 'class_manager'
+              - if @teacher.persisted?
+                %td
+                  = fr.check_box :_destroy, checked_value: "0", class: "form-control"  
+
+      .form-group
+        .row
+          .col-md-4
+            = f.submit 'Зберегти', class: "btn btn-success btn-block" 
+          .col-md-4  
+            = f.submit 'Відміна', class: "btn btn-danger btn-block" 
+                           
+  #teacher-profile.panel.panel-primary
+    .panel-heading ІНФОРМАЦІЯ ПРОФІЛЯ
+    .panel-body.panel-form
+      = f.fields_for :profile do |fp|
+        .form-group
+          %label Ім'я
+          = fp.text_field :first_name, class: "form-control"
+        .form-group
+          %label Прізвище
+          = fp.text_field :last_name, class: "form-control"
+        .form-group
+          %label Дата народження
+          = fp.date_field :birth_date, class: "form-control"
+         
+        = fp.fields_for :address do |fpa|
+          .form-group
+            %label Адреса
+            = fpa.text_field :address_string, class: "form-control"
+        %label Телефони
+         
+        = fp.fields_for :phones do |fpp|
+          .form-group
+            = fpp.telephone_field :phone_num, class: "form-control"
+         
+        = fp.fields_for :tax_code do |fpt|
+          .form-group
+            %label Податковий код
+            = fpt.text_field :ptc, class: "form-control"
+  
+  

@@ -1,0 +1,15 @@
+%section#login-form
+  = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+    .form-group
+      = f.label "Ім'я користувача або email"
+      %br/
+      = f.text_field :sign_token, autofocus: true, class: "form-control"
+    .form-group
+      = f.label "Пароль"
+      %br/
+      = f.password_field :password, autocomplete: "off", class: "form-control"
+    .form-group
+      = f.submit "Увійти!", class: "btn btn-primary"
+  - if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations'
+    = link_to "Не пам'ятаєте пароль?", new_password_path(resource_name)
+    %br/

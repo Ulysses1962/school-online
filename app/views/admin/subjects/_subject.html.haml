@@ -1,0 +1,9 @@
+%tr
+  %td
+    = subject.name
+  %td
+    = subject.level
+  %td
+    = link_to edit_admin_subject_path(subject.id), class: "change-label" do
+      %i.glyphicon.glyphicon-pencil
+      Edit

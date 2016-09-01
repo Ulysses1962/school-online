@@ -1,0 +1,29 @@
+#subjects-list.panel.panel-primary
+  .panel-heading СПИСОК НАВЧАЛЬНИХ КУРСІВ
+  .panel-body
+    %table.table.table-hover
+      %thead
+        %tr
+          %th.col-md-6 Назва курсу
+          %th.col-md-2 Рік
+          %th.col-md-1 *
+      %tbody
+        = render @subjects
+    .form-group.digg_pagination
+      = will_paginate @subjects, container: false
+    .form-group
+      .row
+        .col-md-2
+          = button_to "Створити курс", new_admin_subject_path(), method: :get, class: "btn btn-primary btn-block"
+        .form-group  
+          = form_for [:admin, @subject], url: admin_import_subjects_path() do |f|
+            .form-group      
+              .row
+                .col-md-2
+                  %label.btn.btn-primary.btn-block
+                    %i.glyphicon.glyphicon-search
+                    Browse 
+                    = f.file_field :school_data, style: "display: none" 
+                .col-md-1  
+                  = f.submit "Імпорт", disabled: true, class: "btn btn-warning btn-block"
+  

@@ -1,0 +1,11 @@
+- unless @subject.blank?
+  %tr
+    %td
+      %input.form-control.s-table-control{ type: 'text',         |
+        value: "#{@subject.id}",                                 |  
+        name: "teacher[subjects_attributes][#{@current}][id]",   |
+        id: "teacher_subjects_attributes_#{@current}_id" }       | 
+    %td
+      %input.form-control.s-table-control{ type: 'text', value: "#{@subject.description}" } 
+    %td
+      %input.form-control.s-table-control{ type: 'text', value: "#{@subject.level}" } 

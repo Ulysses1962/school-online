@@ -1,0 +1,23 @@
+%tr
+  %td= [teacher.profile.first_name, teacher.profile.last_name].join(' ') unless teacher.profile.nil?
+  %td= teacher.username
+  %td= teacher.email
+  %td= teacher.school_id 
+  %td
+    = link_to edit_admin_teacher_path(teacher.id), class: "change-label" do
+      %i.glyphicon.glyphicon-pencil
+      Edit
+  %td    
+    = link_to admin_teacher_path(teacher.id), class: "view-label" do
+      %i.glyphicon.glyphicon-search
+      View  
+  %td
+    = link_to admin_teacher_path(teacher.id), method: :delete, class: "delete-label" do
+      %i.glyphicon.glyphicon-remove
+      Delete
+  %td 
+    = link_to admin_teacher_path(teacher.id), class: "tariff-label" do
+      %i.glyphicon.glyphicon-time
+      Tariffication
+          
+          

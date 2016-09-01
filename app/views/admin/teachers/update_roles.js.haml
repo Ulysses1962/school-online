@@ -1,0 +1,4 @@
+- if @role.blank?
+  == alert('There are no roles for this teacher');
+- else
+  == $("#roles-table tbody").append("#{j render('teacher_roles_ajax')}");    

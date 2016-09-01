@@ -1,0 +1,19 @@
+%section#new-subject-form.panel.panel-primary.panel-teacher
+  .panel-heading СТВОРЕННЯ УЧБОВОГО КУРСУ 
+  .panel-body.panel-form
+    = form_for [:admin, @subject] do |f|
+      - if @subject.errors.any?
+        .panel.panel-danger.panel-content
+          .panel-heading Некоректна інформація!
+          .panel-body
+            %ul
+              - @subject.errors.messages.each do |message|
+                %li= message
+      .form-group
+        %label Назва курсу
+        = f.text_field :name, class: "form-control"
+      .form-group
+        %label Рік навчання
+        = f.text_field :level, class: "form-control"
+      .form-group
+        = f.submit "Зберегти",  class: "btn btn-primary"

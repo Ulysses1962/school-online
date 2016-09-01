@@ -1,0 +1,5 @@
+- if @subject.blank?
+  == alert('There are no subjects for this teacher');
+- else
+  == $("#subjects-table tbody").append("#{j render('teacher_subjects_ajax')}");    
+

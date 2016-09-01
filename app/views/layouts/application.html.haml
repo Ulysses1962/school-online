@@ -1,0 +1,66 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title School Online
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  %body
+    %nav.navbar.navbar-default.navbar-fixed-top
+      .container
+        .navbar-header
+          %button.navbar-toggle.collapsed{"aria-expanded" => "false", "data-target" => "#main_menus", "data-toggle" => "collapse", :type => "button"}
+            %span.sr-only Toggle navigation
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          = link_to root_path(), class: "navbar-brand" do
+            %i.glyphicon.glyphicon-leaf
+            SchoolONLINE
+        #main_menus.collapse.navbar-collapse
+          %ul.nav.navbar-nav.navbar-right
+            - unless user_signed_in?
+              %li
+                = link_to new_user_session_path do
+                  %i.glyphicon.glyphicon-log-in
+                  Увійти
+            - else
+              - if current_user.role?(:admin)
+                %li.dropdown
+                  %a.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+                    %i.glyphicon.glyphicon-cog
+                    Адміністрування
+                  %ul.dropdown-menu
+                    %li
+                      = link_to admin_subjects_path do
+                        %i.glyphicon.glyphicon-book
+                        Предмети
+                    %li
+                      = link_to admin_students_path do
+                        %i.glyphicon.glyphicon-education
+                        Учні
+                    %li
+                      = link_to admin_teachers_path do
+                        %i.glyphicon.glyphicon-user
+                        Викладачі
+                    %li
+                      = link_to admin_parents_path do
+                        %i.glyphicon.glyphicon-grain
+                        Батьки
+                    %li
+                      = link_to admin_schools_path do
+                        %i.glyphicon.glyphicon-leaf
+                        Навчальні заклади
+              %li
+                = link_to destroy_user_session_path, :method => 'delete' do
+                  %i.glyphicon.glyphicon-log-out
+                  Вийти
+    %section#flash_messages
+      - flash.each do |name, msg|
+        .alert.alert-success.alert-dismissible.panel-content{:role => "alert"}
+          %button.close{"aria-label" => "Close", "data-dismiss" => "alert", :type => "button"} ×
+          = content_tag :div, msg, id: "flash_#{name}"
+    %section#main-content
+      = yield
+    %footer

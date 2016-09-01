@@ -1,0 +1,48 @@
+#teacher-info.panel.panel-primary
+  .panel-heading ІНФОРМАЦІЯ ПРОФІЛЮ ВИКЛАДАЧА
+  .panel-body.panel-form
+    %h2= [@teacher.profile.first_name, @teacher.profile.last_name].join(' ')
+    %table.table.table-hover 
+      %thead 
+        %tr
+          %th.col-md-4 Параметр 
+          %th.col-md-6 
+      %tbody 
+        %tr 
+          %td Ім'я користувача
+          %td= @teacher.username
+        %tr 
+          %td Email
+          %td= @teacher.email
+        %tr 
+          %td Дата народження
+          %td= @teacher.profile.birth_date.strftime('%d %B %Y')  
+        %tr 
+          %td Ролі
+          %td
+            - @teacher.roles.each do |role|
+              = [role.rolename, '   '].join(' ')
+        %tr 
+          %td Предмети
+          %td
+            - @teacher.subjects.each do |subject|
+              = [[subject.description, ' [', subject.level, ']'].join, '   '].join(' ')
+        %tr 
+          %td Домашня адреса
+          %td= @teacher.profile.address.address_string
+        %tr  
+          %td Телефони
+          %td
+            - @teacher.profile.phones.each do |phone|
+              = phone.phone_num
+
+    = button_to 'Завершити', admin_teachers_path(), method: :get, class: "btn btn-success"
+
+
+               
+
+          
+
+              
+
+             

@@ -1,0 +1,24 @@
+#teachers-list.panel.panel-primary
+  .panel-heading СПИСОК ВИКЛАДАЧІВ
+  .panel-body
+    %table.table.table-hover
+      %thead
+        %tr
+          %th.col-md-2 Ім'я 
+          %th.col-md-2 Ім'я користувача
+          %th.col-md-2 Email 
+          %th.col-md-1 Школа
+          %th.col-md-1
+          %th.col-md-1
+          %th.col-md-1
+          %th.col-md-1
+      %tbody
+        = render @teachers
+    .form-group.digg_pagination
+      = will_paginate @teachers, container: false
+    .form-group
+      .row
+        .col-md-2
+          = button_to "Додати викладача", new_admin_teacher_path(), method: :get, class: "btn btn-primary btn-block"
+        .col-md-2  
+          = button_to "Імпорт", admin_import_teachers_path(), method: :get, class: "btn btn-warning btn-block"

@@ -1,0 +1,50 @@
+.panel-teacher {
+  float: right;
+  width: 70%;
+  margin-right: 20px;
+}
+
+.panel-body {
+  background-color: #555555;
+}
+
+#teacher-main {
+  float: left;
+  width: 48%;
+  margin-left: 1px;
+}
+
+#teacher-profile {
+  float: right;
+  width: 50%;
+  margin-right: 1px;
+}
+
+#teachers-list, #teacher-info {
+  background-color: #211B02;
+  float: left;
+  margin-left: 15px;
+  width: 95%;
+}
+
+.s-table-control {
+  background-color: #555555;
+  border: none;
+  color: bisque;  
+}
+
+.change-label {
+  color: #66c2ff;
+}
+
+.view-label {
+  color: #00ff00;
+}
+
+.delete-label {
+  color:#ff0000;
+}
+
+.tariff-label {
+  color: blanchedalmond; 
+}

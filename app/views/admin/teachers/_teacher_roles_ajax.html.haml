@@ -1,0 +1,9 @@
+- unless @role.blank?
+  %tr
+    %td
+      %input.form-control.s-table-control{ type: 'text',      |
+        value: "#{@role.id}",                                 |  
+        name: "teacher[roles_attributes][#{@current}][id]",   |
+        id: "teacher_roles_attributes_#{@current}_id" }       | 
+    %td
+      %input.form-control.s-table-control{ type: 'text', value: "#{@role.rolename}" } 

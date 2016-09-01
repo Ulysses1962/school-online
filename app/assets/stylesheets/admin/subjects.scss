@@ -1,0 +1,12 @@
+// Place all the styles related to the admin/subjects controller here.
+// They will automatically be included in application.css.
+// You can use Less here: http://lesscss.org/
+#subjects-list {
+  background-color: #211B02;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #01516A;
+}
