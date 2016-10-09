@@ -1,6 +1,6 @@
-namespace :ranks do
+namespace :rank_calculation do
   desc 'Ranks calculation'
-  task calc_ranks :environment do
-    RankCalculator.perform_later
+  task :calculate_ranks => :environment do
+    RankCalculatorJob.perform_later
   end
 end

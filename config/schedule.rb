@@ -8,5 +8,5 @@ set :environment, :development
 set :output, "log/cron_log.log"
 
 every :sunday, :at => '12pm' do
-  rake "ranks:calc_ranks"
+  rake "rank_calculation:calculate_ranks"
 end

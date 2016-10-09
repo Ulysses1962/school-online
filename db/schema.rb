@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160709134538) do
+ActiveRecord::Schema.define(version: 20161006074616) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "marks", force: :cascade do |t|
+    t.integer  "student_id", null: false
+    t.integer  "subject_id", null: false
+    t.decimal  "mark",       null: false
+    t.integer  "mark_type",  null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["student_id"], name: "index_marks_on_student_id", using: :btree
+    t.index ["subject_id"], name: "index_marks_on_subject_id", using: :btree
+  end
 
   create_table "phones", force: :cascade do |t|
     t.integer  "profile_id"
@@ -42,6 +53,17 @@ ActiveRecord::Schema.define(version: 20160709134538) do
     t.index ["academic_class"], name: "index_profiles_on_academic_class", using: :btree
     t.index ["academic_parallel"], name: "index_profiles_on_academic_parallel", using: :btree
     t.index ["user_id"], name: "index_profiles_on_user_id", using: :btree
+  end
+
+  create_table "ranks", force: :cascade do |t|
+    t.integer  "student_id", null: false
+    t.integer  "subject_id"
+    t.integer  "rank_type"
+    t.integer  "rank_level"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["student_id"], name: "index_ranks_on_student_id", using: :btree
+    t.index ["subject_id"], name: "index_ranks_on_subject_id", using: :btree
   end
 
   create_table "roles", force: :cascade do |t|

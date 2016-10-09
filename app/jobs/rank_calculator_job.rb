@@ -115,7 +115,7 @@ class RankCalculatorJob < ApplicationJob
   #---------------------------------------------------------------------------------------------------
   # Auxiliary routines 
   #---------------------------------------------------------------------------------------------------
-  def cals_ranks(student_list, subject = nil)
+  def calc_ranks(student_list, subject = nil)
     ranks = RankList.new
     ranks.subj_code = subj.id unless subject.nil?
     student_list.each do |student|
