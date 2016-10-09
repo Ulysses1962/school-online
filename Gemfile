@@ -25,10 +25,12 @@ gem 'sass-rails'
 gem 'bootstrap-sass', '>= 3.3.7'
 gem 'haml-rails', '>= 0.9.0'
 
-
+gem 'rubyzip', '1.1.7'
+gem 'react-rails', '>= 1.7.1'
 gem 'roo', '>= 2.4.0'
 gem 'geocoder'
 gem 'will_paginate', '>= 3.1.0'
+gem 'whenever', '>= 0.9.7'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

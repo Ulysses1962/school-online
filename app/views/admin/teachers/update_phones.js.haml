@@ -1,0 +1,4 @@
+- if @phone_num.blank?
+  == alert('There are no phones for this teacher');
+- else
+  == $("#phones-table tbody").append("#{j render('teacher_phones_ajax')}");    

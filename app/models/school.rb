@@ -1,5 +1,5 @@
 class School < ActiveRecord::Base
-  has_many :profiles
+  has_many  :users
 
   validates :school_code, presence: true, uniqueness: true
   validates :school_email, presence: true, uniqueness: true

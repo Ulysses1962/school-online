@@ -4,6 +4,7 @@
 
 jQuery ->
   $(document).ready ->
+    # Adding subjects
     $("#add-subject-commit").click ->
       idx                     = $("#teacher_subjects").val()
       update_path             = $("#update_path").val()
@@ -16,6 +17,7 @@ jQuery ->
           type:     'GET'
           dataType: 'script'
 
+    # Adding roles      
     $("#add-role-commit").click ->
       idr                       = $("#teacher_roles").val()
       update_r_path             = $("#update_roles_path").val()
@@ -27,6 +29,23 @@ jQuery ->
         $.ajax update_r_path_with_param,
           type:     'GET'
           dataType: 'script'    
+
+    # Adding teacher phones
+    $("#add-phone-commit").click ->
+      p_num                      = $("#teacher_phones").val()
+      update_p_path              = $("#update_phones_path").val()
+      update_p_path_with_params  = "#{update_p_path}?p_num=#{p_num}"
+
+      $("#teacher_phone").val("")
+
+      if p_num
+        $.ajax update_p_path_with_params,
+          type:     'GET'
+          dataType: 'script'   
+
+     # Enabling Import     
+     $("#teacher_school_data").change ->
+      $(":submit").removeAttr("disabled")                      
 
       
 

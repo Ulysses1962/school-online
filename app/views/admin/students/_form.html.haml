@@ -1,0 +1,85 @@
+= form_for [:admin, @student] do |f|
+  #student-main.panel.panel-primary
+    .panel-heading ОСНОВНА ІНФОРМАЦІЯ
+    .panel-body.panel-form
+      - if @student.errors.any?
+        .panel.panel-danger.panel-content
+          .panel-heading Некоректна інформація!
+          .panel-body
+            %ul
+              - @student.errors.messages.each do |message|
+                %li= message
+      .form-group
+        %label Школа
+        = f.select :school_id, options_for_select(@school_options, @student.school_id), {:include_blank => true}, {:class => "form-control"}
+      .form-group
+        %label Адреса електронної пошти
+        = f.email_field :email, class: "form-control"
+      .form-group
+        %label Ім'я користувача
+        = f.text_field :username, class: "form-control"
+      - unless @student.persisted?  
+        .form-group
+          %label Пароль
+          = f.password_field :password, class: "form-control", autocomplete: :on
+        .form-group
+          %label Підтвердження пароля
+          = f.password_field :password_confirmation, autocomplete: :on, class: "form-control"
+      .form-group
+        .row
+          .col-md-4
+            = f.submit 'Зберегти', class: "btn btn-success btn-block" 
+          .col-md-4  
+            = f.submit 'Відміна', class: "btn btn-danger btn-block" 
+                           
+  #student-profile.panel.panel-primary
+    .panel-heading ІНФОРМАЦІЯ ПРОФІЛЯ
+    .panel-body.panel-form
+      = f.fields_for :profile do |fp|
+        .form-group
+          %label Ім'я
+          = fp.text_field :first_name, class: "form-control"
+        .form-group
+          %label Прізвище
+          = fp.text_field :last_name, class: "form-control"
+        .form-group
+          %label Дата народження
+          = fp.date_field :birth_date, class: "form-control"
+        .form-group
+          %label Адреса
+          = fp.text_field :address_string, class: "form-control"
+        .form-group
+          %label Клас
+          = fp.text_field :academic_class, class: "form-control"
+        .form-group
+          %label Паралель
+          = fp.text_field :academic_parallel, class: "form-control"
+        .form-group
+          %label Код персональної справи
+          = fp.text_field :personal_file_code, class: "form-control"
+ 
+        %label Телефони
+        .form-group
+          .row
+            .col-md-7      
+              = text_field_tag "student_phones", class: "form-control"
+            .col-md-5  
+              = submit_tag 'Додати', id: 'add-phone-commit', type: 'button', class: 'btn btn-danger'
+        
+        #phones-list
+          = hidden_field_tag "update_phones_path", admin_update_student_phones_path
+        %table.phones-table.table
+          %thead
+            %tr
+              %th.col-md-3 Телефон
+              - if @student.persisted?
+                %th.col-md-1
+                  Видалити
+          %tbody
+            = f.fields_for :phones do |fph|
+              %tr
+                %td
+                  = fph.text_field :phone_num, class: "form-control s-table-control"
+                - if @student.persisted?
+                  %td
+                    = fph.check_box :_destroy, checked_value: "0", class: "form-control"  

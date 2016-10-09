@@ -1,0 +1,32 @@
+%section#edit-triff-form.panel.panel-primary.panel-teacher
+  .panel-heading РЕДАГУВАННЯ ТАРИФІКАЦІЇ 
+  .panel-body.panel-form
+    = form_for [:admin, @tariffication] do |f|
+      - if @tariffication.errors.any?
+        .panel.panel-danger.panel-content
+          .panel-heading Некоректна інформація!
+          .panel-body
+            %ul
+              - @tariffication.errors.messages.each do |message|
+                %li= message
+      .form-group
+        %label Назва курсу
+        = select_tag "subject", options_for_select(@subject_names), include_blank: true, class: "form-control"
+      .form-group
+        %label Навчальний рік
+        = f.text_field :academic_year, class: "form-control"
+      .form-group
+        %label Клас
+        = f.text_field :academic_class, class: "form-control"
+      .form-group
+        %label Паралель
+        = f.text_field :academic_parallel, class: "form-control"
+      .form-group
+        %label Години
+        = f.text_field :tariff_hours, class: "form-control"
+      .form-group
+        .row
+          .col-md-4
+            = f.submit 'Зберегти', class: "btn btn-success btn-block" 
+          .col-md-4  
+            = f.submit 'Відміна', class: "btn btn-danger btn-block" 

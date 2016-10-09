@@ -16,9 +16,14 @@
         = render @teachers
     .form-group.digg_pagination
       = will_paginate @teachers, container: false
-    .form-group
-      .row
-        .col-md-2
-          = button_to "Додати викладача", new_admin_teacher_path(), method: :get, class: "btn btn-primary btn-block"
-        .col-md-2  
-          = button_to "Імпорт", admin_import_teachers_path(), method: :get, class: "btn btn-warning btn-block"
+    .form-group  
+      = form_for [:admin, @teacher], url: admin_import_teachers_path() do |f|
+        .form-group      
+          .row
+            .col-md-2
+              %label.btn.btn-primary.btn-block
+                %i.glyphicon.glyphicon-search
+                  Browse 
+                  = f.file_field :school_data, style: "display: none" 
+            .col-md-1  
+              = f.submit "Імпорт", disabled: true, class: "btn btn-warning btn-block"

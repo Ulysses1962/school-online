@@ -67,7 +67,7 @@
             = submit_tag 'Додати', id: 'add-role-commit', type: 'button', class: 'btn btn-danger'
 
       #roles-list
-        = hidden_field_tag "update_roles_path", admin_update_roles_path
+        = hidden_field_tag "update_roles_path", admin_update_teacher_roles_path
       %table#roles-table.table
         %thead
           %tr
@@ -86,9 +86,7 @@
               %td
                 = fr.text_field :rolename, class: "form-control s-table-control"
               %td
-                = f.text_field(:a_class_level, value: @a_class_level, class: "form-control") if fr.object.rolename == 'class_manager' 
               %td
-                = f.text_field :a_class_parallel, value: @a_class_parallel, class: "form-control" if fr.object.rolename == 'class_manager'
               - if @teacher.persisted?
                 %td
                   = fr.check_box :_destroy, checked_value: "0", class: "form-control"  
@@ -113,20 +111,46 @@
         .form-group
           %label Дата народження
           = fp.date_field :birth_date, class: "form-control"
-         
-        = fp.fields_for :address do |fpa|
-          .form-group
-            %label Адреса
-            = fpa.text_field :address_string, class: "form-control"
+        .form-group
+          %label Адреса
+          = fp.text_field :address_string, class: "form-control"
+        .form-group
+          %label Клас
+          = fp.text_field :academic_class, class: "form-control"
+        .form-group
+          %label Паралель
+          = fp.text_field :academic_parallel, class: "form-control"
+        .form-group
+          %label Податковий код
+          = fp.text_field :ptc, class: "form-control"
+ 
         %label Телефони
+        .form-group
+          .row
+            .col-md-7      
+              = text_field_tag "teacher_phones", class: "form-control"
+            .col-md-5  
+              = submit_tag 'Додати', id: 'add-phone-commit', type: 'button', class: 'btn btn-danger'
+        
+        #phones-list
+          = hidden_field_tag "update_phones_path", admin_update_teacher_phones_path
+        %table.phones-table.table
+          %thead
+            %tr
+              %th.col-md-3 Телефон
+              - if @teacher.persisted?
+                %th.col-md-1
+                  Видалити
+          %tbody
+            = f.fields_for :phones do |fph|
+              %tr
+                %td
+                  = fph.text_field :phone_num, class: "form-control s-table-control"
+                - if @teacher.persisted?
+                  %td
+                    = fph.check_box :_destroy, checked_value: "0", class: "form-control"  
+              
          
-        = fp.fields_for :phones do |fpp|
-          .form-group
-            = fpp.telephone_field :phone_num, class: "form-control"
-         
-        = fp.fields_for :tax_code do |fpt|
-          .form-group
-            %label Податковий код
-            = fpt.text_field :ptc, class: "form-control"
+        
   
   

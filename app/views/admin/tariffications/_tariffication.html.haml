@@ -1,0 +1,18 @@
+%tr
+  %td
+    = tariffication.subject
+  %td
+    = tariffication.acdemic_year
+  %td
+    = [tariffication.academic_class, tariffication.academic_parallel].join('-')
+  %td
+    = tariffication.tariff_hours    
+  %td
+    = link_to edit_admin_tariffication_path(tariffication.id), class: "change-label" do
+      %i.glyphicon.glyphicon-pencil
+      Edit
+  %td
+    = link_to admin_tariffication_path(tariffication.id), method: :delete, class: "delete-label" do
+      %i.glyphicon.glyphicon-remove
+      Delete
+      

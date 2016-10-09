@@ -1,0 +1,20 @@
+%tr
+  %td= [student.profile.first_name, student.profile.last_name].join(' ') unless student.profile.nil?
+  %td= student.username
+  %td= student.email
+  %td= student.school_id 
+  %td= [student.academic_class, student.academic_parallel].join('-)
+  %td
+    = link_to edit_admin_student_path(student.id), class: "change-label" do
+      %i.glyphicon.glyphicon-pencil
+      Edit
+  %td    
+    = link_to admin_student_path(student.id), class: "view-label" do
+      %i.glyphicon.glyphicon-search
+      View  
+  %td
+    = link_to admin_student_path(student.id), method: :delete, class: "delete-label" do
+      %i.glyphicon.glyphicon-remove
+      Delete
+  %td          
+          

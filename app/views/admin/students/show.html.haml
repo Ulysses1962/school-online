@@ -1,0 +1,39 @@
+#student-info.panel.panel-primary
+  .panel-heading ІНФОРМАЦІЯ ПРОФІЛЮ УЧНЯ
+  .panel-body.panel-form
+    %h2= [@student.profile.first_name, @student.profile.last_name].join(' ')
+    %table.table.table-hover 
+      %thead 
+        %tr
+          %th.col-md-4 Параметр 
+          %th.col-md-6 
+      %tbody 
+        %tr
+          %td Номер особової справи
+          %td= @student.profile.personal_file_code
+        %tr 
+          %td Ім'я користувача
+          %td= @student.username
+        %tr 
+          %td Email
+          %td= @student.email
+        %tr 
+          %td Дата народження
+          %td= @student.profile.birth_date.strftime('%d %B %Y')  
+        %tr 
+        %tr 
+          %td Клас
+          %td= [@student.profile.academic_class, @sudent.profile.academic_parallel].join('-')
+        %tr 
+          %td Домашня адреса
+          %td= @student.profile.address_string
+        %tr  
+          %td Телефони
+          %td
+            - @teacher.profile.phones.each do |phone|
+              = phone.phone_num
+        %tr
+          %td Батьки
+          %td= @student.profile.parent_name      
+
+    = button_to 'Завершити', admin_students_path(), method: :get, class: "btn btn-success"

@@ -16,12 +16,6 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.0]
       t.belongs_to :school, index: true, null: false
       # Subclasses attributes
       t.string    :type
-      # Student's and teacher's attributes
-      # Class student belongs to or class management assignment for teacher
-      t.integer :academic_class, null: true, index: true
-      t.string  :academic_parallel, null: true, index: true
-      t.integer :academic_group, null: true
-      t.string  :parent_name, null: true
       t.timestamps null: false
     end
 

@@ -15,40 +15,6 @@ ActiveRecord::Schema.define(version: 20160709134538) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "academic_classes", force: :cascade do |t|
-    t.integer  "school_id"
-    t.string   "academic_year"
-    t.integer  "academic_class_level"
-    t.string   "academic_class_parallel"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.index ["school_id"], name: "index_academic_classes_on_school_id", using: :btree
-  end
-
-  create_table "academic_groups", force: :cascade do |t|
-    t.integer  "group_number"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-  end
-
-  create_table "addresses", force: :cascade do |t|
-    t.integer  "profile_id"
-    t.string   "address_string"
-    t.float    "longitude"
-    t.float    "latitude"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.index ["profile_id"], name: "index_addresses_on_profile_id", using: :btree
-  end
-
-  create_table "personal_files", force: :cascade do |t|
-    t.integer  "profile_id"
-    t.string   "personal_file_code", null: false
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.index ["profile_id"], name: "index_personal_files_on_profile_id", using: :btree
-  end
-
   create_table "phones", force: :cascade do |t|
     t.integer  "profile_id"
     t.string   "phone_num"
@@ -59,11 +25,22 @@ ActiveRecord::Schema.define(version: 20160709134538) do
 
   create_table "profiles", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "first_name", null: false
-    t.string   "last_name",  null: false
-    t.datetime "birth_date", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "first_name",         null: false
+    t.string   "last_name",          null: false
+    t.datetime "birth_date",         null: false
+    t.integer  "academic_class"
+    t.string   "academic_parallel"
+    t.integer  "academic_group"
+    t.string   "parent_name"
+    t.string   "address_string"
+    t.string   "personal_file_code", null: false
+    t.string   "ptc",                null: false
+    t.float    "longitude"
+    t.float    "latitude"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["academic_class"], name: "index_profiles_on_academic_class", using: :btree
+    t.index ["academic_parallel"], name: "index_profiles_on_academic_parallel", using: :btree
     t.index ["user_id"], name: "index_profiles_on_user_id", using: :btree
   end
 
@@ -106,25 +83,19 @@ ActiveRecord::Schema.define(version: 20160709134538) do
 
   create_table "tariffications", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "academic_class_id"
-    t.integer  "academic_group_id"
     t.integer  "subject_id"
-    t.integer  "academic_year"
-    t.decimal  "tariff_hours"
+    t.integer  "academic_year",     null: false
+    t.integer  "academic_class",    null: false
+    t.string   "academic_parallel", null: false
+    t.integer  "academic_group"
+    t.decimal  "tariff_hours",      null: false
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
-    t.index ["academic_class_id"], name: "index_tariffications_on_academic_class_id", using: :btree
-    t.index ["academic_group_id"], name: "index_tariffications_on_academic_group_id", using: :btree
+    t.index ["academic_class"], name: "index_tariffications_on_academic_class", using: :btree
+    t.index ["academic_parallel"], name: "index_tariffications_on_academic_parallel", using: :btree
+    t.index ["academic_year"], name: "index_tariffications_on_academic_year", using: :btree
     t.index ["subject_id"], name: "index_tariffications_on_subject_id", using: :btree
     t.index ["user_id"], name: "index_tariffications_on_user_id", using: :btree
-  end
-
-  create_table "tax_codes", force: :cascade do |t|
-    t.integer  "profile_id"
-    t.string   "ptc",        null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["profile_id"], name: "index_tax_codes_on_profile_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -140,9 +111,6 @@ ActiveRecord::Schema.define(version: 20160709134538) do
     t.inet     "last_sign_in_ip"
     t.integer  "school_id",                           null: false
     t.string   "type"
-    t.integer  "academic_class_id"
-    t.integer  "academic_group_id"
-    t.integer  "parent_name"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree

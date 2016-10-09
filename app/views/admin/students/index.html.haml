@@ -1,0 +1,30 @@
+#students-list.panel.panel-primary
+  .panel-heading СПИСОК УЧНІВ
+  .panel-body
+    %table.table.table-hover
+      %thead
+        %tr
+          %th.col-md-2 Ім'я 
+          %th.col-md-2 Ім'я користувача
+          %th.col-md-2 Email 
+          %th.col-md-1 Школа
+          %th.col-md-1 Клас
+          %th.col-md-1
+          %th.col-md-1
+          %th.col-md-1
+          %th.col-md-1
+      %tbody
+        = render @students
+    .form-group.digg_pagination
+      = will_paginate @students, container: false
+    .form-group  
+      = form_for [:admin, @student], url: admin_import_students_path() do |f|
+        .form-group      
+          .row
+            .col-md-2
+              %label.btn.btn-primary.btn-block
+                %i.glyphicon.glyphicon-search
+                  Browse 
+                  = f.file_field :school_data, style: "display: none" 
+            .col-md-1  
+              = f.submit "Імпорт", disabled: true, class: "btn btn-warning btn-block"

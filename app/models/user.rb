@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   validates :username, presence: true, uniqueness: true       
   validates :school_id, presence: true, uniqueness: false
   
+  
   attr_accessor :sign_token
 
   def self.find_for_database_authentication(warden_conditions)
