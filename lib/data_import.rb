@@ -87,7 +87,7 @@ module DataImport
       parent          = row.reject(&:empty?)
       first_name      = parent[0].value
       last_name       = parent[1].value
-      full_name       = unless first_name == 'не вказано' [first_name, last_name].join(' ') else last_name
+      full_name       = unless first_name == 'не вказано' then [first_name, last_name].join(' ') else last_name end
 
       p_code_offset = 4
       personal_codes  = []

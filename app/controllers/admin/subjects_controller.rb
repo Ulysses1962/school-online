@@ -30,9 +30,9 @@ class Admin::SubjectsController < ApplicationController
   def update
     @subject = Subject.find(edit_params[:id])
     if @subject.update_attributes(update_params)
-      redirect_to admin_subjects_path(), notice: "Параметри курси успішно оновлені!" and return
+      render json: @subject
     else
-      render 'edit'
+      render json: @subject.errors, status: :unprocessable_entity
     end    
   end
 
