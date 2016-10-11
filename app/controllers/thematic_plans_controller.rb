@@ -2,8 +2,9 @@ class ThematicPlansController < ApplicationController
   authorize_resource
 
   def index
-    @thematic_plans = ThematicPlan.where('school_id = ?', current_user.school_id)
-    render component: 'ThematicPlans', props: { thematic_plans: @thematic_plans }  
+    @subjects = Subject.all
+    @thematic_plans = ThematicPlan.joins('subjects').where('school_id = ?', current_user.school_id)
+    render component: 'ThematicPlans', props: { thematic_plans: @thematic_plans, subjects: @subjects }  
   end   
 
   private
