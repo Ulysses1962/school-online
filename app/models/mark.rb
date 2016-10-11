@@ -7,6 +7,7 @@ class Mark < ApplicationRecord
 
   belongs_to :student
   belongs_to :subject
+  belongs_to :thematicplan
 
   validates :mark, presence: true
   validates :mark_type, presence: true

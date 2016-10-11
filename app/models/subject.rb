@@ -3,6 +3,7 @@ class Subject < ActiveRecord::Base
   has_many  :tariffications
   has_many :marks
   has_many :ranks
+  has_many :thematicplans
   
   validates :name, presence: true
   validates :level, presence: true

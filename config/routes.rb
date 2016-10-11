@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   root to: 'home#index'
   devise_for :users, :controllers => { registrations: 'registrations' }
 
+  resources :marks
+  resources :thematic_plans
+
   namespace :admin do
     get 'welcome', to: 'welcome#index' 
     
