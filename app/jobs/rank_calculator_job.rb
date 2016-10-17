@@ -71,7 +71,7 @@ class RankCalculatorJob < ApplicationJob
   end 
 
   def build_parallel_ranks_by_subject(school, parallel)
-    subjects = Subject.in_class(parallel.academic_class).select('id')
+    subjects = Subject.in_school(school).select('id')
     students = Student.in_parallel(parallel.academic_class, school).select('id')
 
     subjects.each do |subj|
@@ -92,7 +92,7 @@ class RankCalculatorJob < ApplicationJob
   end  
 
   def build_class_ranks_by_subject(school, student_class)
-    subjects = Subject.in_class(student_class.academic_class).select('id'))  
+    subjects = Subject.in_school(school).select('id')  
     students = Student.in_class(student_class.academic_class, student_class.academic_parallel, school).select('id')
 
     subjects.each do |subj|

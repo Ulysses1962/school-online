@@ -13,7 +13,7 @@ class Mark < ApplicationRecord
   validates :mark_type, presence: true
   validates_inclusion_of :mark_type, :in => [THEMATIC_MARK, SEMESTER_MARK]
 
-  scope :this_year_marks, lambda {where("created_at >= ? AND created_at <= ?", Mark.academic_year_start_date, DateTime.now)}  
+  scope :this_year_marks, -> () { where("created_at >= ? AND created_at <= ?", Mark.academic_year_start_date, DateTime.now) }  
  
   def self.academic_year_start_date
     now  = DateTime.now

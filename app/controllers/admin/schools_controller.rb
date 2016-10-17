@@ -1,14 +1,15 @@
 require 'data_import'
 
 class Admin::SchoolsController < ApplicationController
+  ITEMS_PER_PAGE 15
+
   authorize_resource
   
   def index
-    @school = School.new
     if current_user.role?(:admin)
-      @schools = School.all.order('id ASC').paginate(page: index_params[:page], per_page: 15)
+      @schools = School.all.order('id ASC').paginate(page: index_params[:page], per_page: ITEMS_PER_PAGE)
     else
-      @schools = School.find(current_user.school_id).paginate(page: index_params[:page], per_page: 15)
+      @schools = School.find(current_user.school_id)
     end    
   end
 
@@ -18,33 +19,47 @@ class Admin::SchoolsController < ApplicationController
 
   def show
     @school = School.find(edit_params[:id])
+    
+    respond_to do |format|
+      format.json { render json: @school }
+    end  
   end  
 
   def edit
     @school = School.find(edit_params[:id])
+
+    respond_to do |format|
+      format.jason { render json: @school }
+    end  
   end   
 
   def create
     return redirect_to(admin_schools_path(), notice: "Створення профілю школи відмінено користувачем") if params[:commit] == 'Відміна'
+    @school = School.new(create_params)
 
-    school = School.new(create_params)
-
-    if school.save   
-      redirect_to admin_schools_path(), notice: "Профіль школи успішно створено!" and return
-    else
-      redirect_to admin_schools_path(), alert: "Помилка створення профілю школи!" and return
-    end   
+    respond_to do |format|
+      if @school.save
+        format.html { redirect_to admin_schools_path(), notice: "Профіль школи успішно створено!" and return }
+        format.json { render json: @school, status: :created }
+      else
+        format.html { redirect_to admin_schools_path(), alert: "Помилка створення профілю школи!" and return }
+        format.json { render json: @school.errors, status: :unprocessable_entity }
+      end    
+    end  
   end 
 
   def update
     return redirect_to(admin_schools_path(), notice: "Редагування відмінено користувачем") if params[:commit] == 'Відміна'
+    @school = School.find(edit_params[:id])
 
-    school = School.find(edit_params[:id])
-
-    if school.update_attributes(update_params)
-      return redirect_to admin_schools_path(), notice: "Профіль школи успішно оновлено!"
-    else
-      redirect_to admin_schools_path(), alert: "Помилка оновлення профіля!"
+    respond_to do |format|
+      if @school.update_attributes(update_params)
+        format.html { redirect_to admin_schools_path(), notice: "Профіль школи успішно оновлено!" and return }
+        formar.json { render json: @school, status: :ok }
+      else
+        format.html { redirect_to admin_schools_path(), alert: "Помилка оновлення профіля!" and return }
+        format.json { render json: @school.errors, status: :unprocessable_entity }
+      end    
     end  
   end 
 

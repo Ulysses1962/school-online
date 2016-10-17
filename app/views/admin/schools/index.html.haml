@@ -1,26 +1,4 @@
 #schools-list.panel.panel-primary
   .panel-heading СПИСОК НАВЧАЛЬНИХ ЗАКЛАДІВ
   .panel-body
-    %table.table.table-hover
-      %thead
-        %tr
-          %th.col-md-2 Код 
-          %th.col-md-4 Назва навчального закладу
-          %th.col-md-1
-          %th.col-md-1
-          %th.col-md-1
-      %tbody
-        = render @schools
-    .form-group.digg_pagination
-      = will_paginate @schools, container: false
-    .form-group
-      = form_for [:admin, @school], url: admin_import_school_path() do |f|
-        .form-group      
-          .row
-            .col-md-2
-              %label.btn.btn-primary.btn-block
-                %i.glyphicon.glyphicon-search
-                Browse 
-                = f.file_field :school_data, style: "display: none" 
-            .col-md-1  
-              = f.submit "Імпорт", disabled: true, class: "btn btn-warning btn-block"
+    = react_component 'Schools', { data: @schools }

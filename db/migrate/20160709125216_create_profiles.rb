@@ -14,7 +14,7 @@ class CreateProfiles < ActiveRecord::Migration[5.0]
       # Address info
       t.string      :address_string
       t.string      :personal_file_code, null: false
-      t.string      :ptc, null: false
+      t.string      :personal_tax_code, null: false
       # Geocoding data
       t.float       :longitude, null: true
       t.float       :latitude, null: true

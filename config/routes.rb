@@ -10,9 +10,6 @@ Rails.application.routes.draw do
     
     # Teacher related section
     resources :teachers
-    get 'update_subjects', to: 'teachers#update_subjects'
-    get 'update_teacher_roles', to: 'teachers#update_roles'  
-    get 'update_teacher_phones', to: 'teachers#update_phones'
     post 'import_teachers', to: 'teachers#import_teachers'
 
     # Tariffications related section
@@ -29,7 +26,6 @@ Rails.application.routes.draw do
 
     # Student related section
     resources :students
-    get 'update_student_phones', to: 'students#update_phones'
     post 'import_students', to: 'students#import_students'
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

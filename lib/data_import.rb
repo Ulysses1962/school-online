@@ -24,11 +24,12 @@ module DataImport
 
   def self.subjects_import(data_file)
     xlsx = Roo::Spreadsheet.open(data_file)
+    school_id = current_user.school_id
 
     xlsx.sheet('subjects').each_row_streaming do |row|
       subject = row.reject(&:empty?)
       name = subject.delete_at(0)
-      subject.each {|level| Subject.create!(name: name, level: level.value)}
+      Subject.create!(school_id: school_id, name: name)
     end
 
     xlsx.close
@@ -44,12 +45,12 @@ module DataImport
   def self.import_students(data_file)
     xlsx = Roo::Spreadsheet.open(data_file)
     school_code = xlsx.sheet('school').b1
-    school_id = School.find_by(school_code: school_code)
-    current_user = 1
+    school_id = current_user.school_id
 
+    current_student = 1
     xlsx.sheet('students').each_row_streaming do |row|
       student           = row.reject(&:empty?)
-      username          = "User" << "_#{school_code}_#{current_user}"
+      username          = "User" << "_#{school_code}_#{current_student}"
       password          = User.get_password
       first_name        = student[0].value
       last_name         = student[1].value
@@ -80,7 +81,7 @@ module DataImport
         phones.each { |num| s.profile.phones << num }
       end  
       student_record.save
-      current_user += 1
+      current_student += 1
     end
     # Parent initialization...
     xlsx.sheet('parents').each_row_streaming do |row|
