@@ -1,7 +1,7 @@
 require 'data_import'
 
 class Admin::SchoolsController < ApplicationController
-  ITEMS_PER_PAGE 15
+  ITEMS_PER_PAGE = 15
 
   authorize_resource
   

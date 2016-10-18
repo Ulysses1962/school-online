@@ -10,10 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160709134538) do
+ActiveRecord::Schema.define(version: 20161011130637) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "marks", force: :cascade do |t|
+    t.integer  "student_id",      null: false
+    t.integer  "subject_id",      null: false
+    t.integer  "thematicplan_id"
+    t.decimal  "mark",            null: false
+    t.integer  "mark_type",       null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["student_id"], name: "index_marks_on_student_id", using: :btree
+    t.index ["subject_id"], name: "index_marks_on_subject_id", using: :btree
+    t.index ["thematicplan_id"], name: "index_marks_on_thematicplan_id", using: :btree
+  end
 
   create_table "phones", force: :cascade do |t|
     t.integer  "profile_id"
@@ -34,7 +47,7 @@ ActiveRecord::Schema.define(version: 20160709134538) do
     t.string   "parent_name"
     t.string   "address_string"
     t.string   "personal_file_code", null: false
-    t.string   "ptc",                null: false
+    t.string   "personal_tax_code",  null: false
     t.float    "longitude"
     t.float    "latitude"
     t.datetime "created_at",         null: false
@@ -42,6 +55,17 @@ ActiveRecord::Schema.define(version: 20160709134538) do
     t.index ["academic_class"], name: "index_profiles_on_academic_class", using: :btree
     t.index ["academic_parallel"], name: "index_profiles_on_academic_parallel", using: :btree
     t.index ["user_id"], name: "index_profiles_on_user_id", using: :btree
+  end
+
+  create_table "ranks", force: :cascade do |t|
+    t.integer  "student_id", null: false
+    t.integer  "subject_id"
+    t.integer  "rank_type"
+    t.integer  "rank_level"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["student_id"], name: "index_ranks_on_student_id", using: :btree
+    t.index ["subject_id"], name: "index_ranks_on_subject_id", using: :btree
   end
 
   create_table "roles", force: :cascade do |t|
@@ -69,21 +93,16 @@ ActiveRecord::Schema.define(version: 20160709134538) do
   end
 
   create_table "subjects", force: :cascade do |t|
+    t.integer  "school_id"
     t.string   "name"
-    t.integer  "level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "subjects_users", id: false, force: :cascade do |t|
-    t.integer "subject_id", null: false
-    t.integer "user_id",    null: false
-    t.index ["subject_id", "user_id"], name: "index_subjects_users_on_subject_id_and_user_id", using: :btree
+    t.index ["school_id"], name: "index_subjects_on_school_id", using: :btree
   end
 
   create_table "tariffications", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "subject_id"
+    t.string   "subject"
     t.integer  "academic_year",     null: false
     t.integer  "academic_class",    null: false
     t.string   "academic_parallel", null: false
@@ -94,8 +113,21 @@ ActiveRecord::Schema.define(version: 20160709134538) do
     t.index ["academic_class"], name: "index_tariffications_on_academic_class", using: :btree
     t.index ["academic_parallel"], name: "index_tariffications_on_academic_parallel", using: :btree
     t.index ["academic_year"], name: "index_tariffications_on_academic_year", using: :btree
-    t.index ["subject_id"], name: "index_tariffications_on_subject_id", using: :btree
+    t.index ["subject"], name: "index_tariffications_on_subject", using: :btree
     t.index ["user_id"], name: "index_tariffications_on_user_id", using: :btree
+  end
+
+  create_table "thematic_plans", force: :cascade do |t|
+    t.integer  "school_id"
+    t.integer  "subject_id"
+    t.integer  "academic_class",    null: false
+    t.string   "academic_parallel", null: false
+    t.string   "theme_name"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["academic_class"], name: "index_thematic_plans_on_academic_class", using: :btree
+    t.index ["school_id"], name: "index_thematic_plans_on_school_id", using: :btree
+    t.index ["subject_id"], name: "index_thematic_plans_on_subject_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|

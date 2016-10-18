@@ -5,18 +5,12 @@
     schools: []  
   render: ->
     React.DOM.table
-      className: 'table table-striped'
-      React.DOM.thead
-        React.DOM.tr 
-          React.DOM.th
-            className: 'col-md-2'
-            'Код'
-          React.DOM.th
-            className: 'col-md-6'
-            'Назва навчального закладу'
-          React.DOM.th
-            classNmae: 'col-md-4'
-            '*'
-      React.DOM.tbody
-        for school in @state.Schools  
+      className: 'table'
+      React.DOM.thead null,
+        React.DOM.tr null,
+          React.DOM.th null, 'Код'
+          React.DOM.th null, 'Назва навчального закладу'
+          React.DOM.th null, '*'
+      React.DOM.tbody null,
+        for school in @state.schools  
           React.createElement School, key: school.id, school: school        
