@@ -10,7 +10,8 @@ class SchoolForm extends React.Component {
     };   
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this); 
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleCancel = this.handleCancel.bind(this); 
   };
 
   handleChange(event) {
@@ -19,6 +20,11 @@ class SchoolForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+  }
+
+  handleCancel(event) {
+    event.preventDefault();
+    this.props.handleCancelEditing();
   }
 
   render() {
@@ -45,7 +51,16 @@ class SchoolForm extends React.Component {
           <label>Загальний телефон</label>
           <input name="school_phone" className="form-control" type="text" value={this.props.school.school_phone} onChange={this.handleChange} />
         </div>
-        <button className="btn btn-success" onClick={this.handleSubmit}>Зберегти зміни</button>
+        <div className="form-group">
+          <div className="row">
+            <div className="col-md-3">
+              <button className="btn btn-success school-btn" onClick={this.handleSubmit}>Зберегти зміни</button>
+            </div>
+            <div className="col-md-3">
+              <button className="btn btn-primary school-btn" onClick={this.handleCancel}>Відмінити</button>
+            </div>  
+          </div>  
+        </div>
       </form>
     );
   }

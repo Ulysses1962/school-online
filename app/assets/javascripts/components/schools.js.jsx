@@ -7,6 +7,7 @@ class SchoolList extends React.Component {
     };  
 
     this.handleToggleEditMode = this.handleToggleEditMode.bind(this);
+    this.handleCancelEditMode = this.handleCancelEditMode.bind(this);
     this.handleSchoolEdit = this.handleSchoolEdit.bind(this);  
     this.prepareSchoolsList = this.prepareSchoolsList.bind(this);
     this.prepareSchoolForm = this.prepareSchoolForm.bind(this);
@@ -16,6 +17,12 @@ class SchoolList extends React.Component {
     this.setState({ 
       editMode: true, 
       currentSchool: school
+    });
+  }
+
+  handleCancelEditMode() {
+    this.setState({
+      editMode: false
     });
   }
 
@@ -52,7 +59,7 @@ class SchoolList extends React.Component {
   prepareSchoolForm() {
     school = this.state.currentSchool;
     return (
-      <SchoolForm school = {school} key = {school.id} handleEdit = {this.handleSchoolEdit} />
+      <SchoolForm school = {school} key = {school.id} handleEdit = {this.handleSchoolEdit} handleCancelEditing = {this.handleCancelEditMode} />
     );
   }
 
