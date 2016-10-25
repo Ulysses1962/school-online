@@ -20,15 +20,16 @@ class SchoolList extends React.Component {
   handleImport(event) {
     event.preventDefault();
     var school_data = new FormData();
-    fd.append('file', this.refs.uploadForm.getDOMNode().files[0]);
+    school_data.append('school_data', $('#school_data')[0].files[0]);
     $.ajax({
       url: '/admin/import_school',
-      data: fd,
+      method: 'POST',
       processData: false,
       contentType: false,
-      method: 'POST',
+      data: school_data,  
       success: () => {
         alert('Дані успішно імпортовані');
+        this.setState({fileName: ''});
       }
     });
   }
@@ -85,11 +86,11 @@ class SchoolList extends React.Component {
             {schools}
           </tbody>
         </table>
-        <form ref="uploadForm" className="form-inline" encType="multipart/form-data">
+        <form id="school" className="form-inline">
           <div className="col-md-3 upload-group">
             <div className="input-group">
               <label className="btn input-group-addon btn-primary">
-                Browse..<input ref="school_data" type="file" className="hidden" onChange={this.handleChange} />
+                Browse..<input id="school_data" type="file" className="hidden" onChange={this.handleChange} />
               </label>
               <input type="text" id="file_name" className="form-control" value={this.state.fileName} />  
             </div>
@@ -119,7 +120,7 @@ class SchoolList extends React.Component {
 
     return (
       <div id="schools-list" className="panel panel-primary">
-        <div className="panel-heading">СПИСОК НАВЧАЛЬНИХ ЗАКЛАДІВ</div>
+        <div className="panel-heading">АДМІНІСТРУВАННЯ НАВЧАЛЬНИХ ЗАКЛАДІВ</div>
         <div className="panel-body">
           {content}
         </div>

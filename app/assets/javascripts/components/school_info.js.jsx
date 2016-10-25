@@ -21,8 +21,7 @@ class SchoolInfo extends React.Component {
             <i className="glyphicon glyphicon-pencil"></i>   Редагувати
           </button>  
         </td>
-        <td></td>
       </tr>
     ); 
-  };
+  }
 }
