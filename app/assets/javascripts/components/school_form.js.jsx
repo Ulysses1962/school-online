@@ -2,11 +2,11 @@ class SchoolForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      school_code: '',
-      school_name: '',
-      school_email: '',
-      school_address_string: '',
-      school_phone: ''
+      school_code: this.props.school.school_code,
+      school_name: this.props.school.school_name,
+      school_email: this.props.school.school_email,
+      school_address_string: this.props.school.school_address_string,
+      school_phone: this.props.school.school_phone
     };   
 
     this.handleChange = this.handleChange.bind(this);
@@ -16,40 +16,62 @@ class SchoolForm extends React.Component {
 
   handleChange(event) {
     event.preventDefault();
+    this.setState({
+      [event.target.name]: event.target.value 
+    });
   }
 
   handleSubmit(event) {
     event.preventDefault();
+    URI = '/admin/schools/' + this.props.school.id;
+
+    $.ajax({
+      url: URI,
+      method: 'PUT',
+      processData: false,
+      contentType: 'application/json',
+      data: JSON.stringify({
+        school: {
+          id: this.props.school.id,
+          school_code: this.state.school_code,
+          school_name: this.state.school_name, 
+          school_email: this.state.school_email,
+          school_address_string: this.state.school_address_string,
+          school_phone: this.state.school_phone
+      }}),
+      success: (data) => {
+        this.props.handleUpdate(this.props.school, data);
+      }
+    })
   }
 
   handleCancel(event) {
     event.preventDefault();
-    this.props.handleCancelEditing();
+    this.props.handleCancel();
   }
 
   render() {
     return (
       <form>
-        <h3>SCHOOL EDITING FORM</h3>
         <div className="form-group">
           <label>Код школи</label>
-          <input name="school_code" className="form-control" type="text" value={this.props.school.school_code} onChange={this.handleChange} />
+          <input name="school_code" className="form-control" type="text" value={this.state.school_code} onChange={this.handleChange} />
         </div>
         <div className="form-group">
           <label>Назва школи</label>
-          <input name="school_name" className="form-control" type="text" value={this.props.school.school_name} onChange={this.handleChange} />
+          <input name="school_name" className="form-control" type="text" value={this.state.school_name} onChange={this.handleChange} />
         </div>
         <div className="form-group">
           <label>Адреса електронної пошти</label>
-          <input name="school_email" className="form-control" type="text" value={this.props.school.school_email} onChange={this.handleChange} />
+          <input name="school_email" className="form-control" type="text" value={this.state.school_email} onChange={this.handleChange} />
         </div>
         <div className="form-group">
           <label>Адреса</label>
-          <input name="school_address_string" className="form-control" type="text" value={this.props.school.school_address_string} onChange={this.handleChange} />
+          <input name="school_address_string" className="form-control" type="text" value={this.state.school_address_string} onChange={this.handleChange} />
         </div>
         <div className="form-group">
           <label>Загальний телефон</label>
-          <input name="school_phone" className="form-control" type="text" value={this.props.school.school_phone} onChange={this.handleChange} />
+          <input name="school_phone" className="form-control" type="text" value={this.state.school_phone} onChange={this.handleChange} />
         </div>
         <div className="form-group">
           <div className="row">

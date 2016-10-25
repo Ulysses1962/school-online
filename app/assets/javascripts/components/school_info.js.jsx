@@ -17,7 +17,9 @@ class SchoolInfo extends React.Component {
         <td>{ this.props.school.school_name }</td>
         <td></td>
         <td>
-          <button className="btn btn-danger" onClick={this.handleToggleMode}>Edit</button>  
+          <button className="btn btn-danger" onClick={this.handleToggleMode}>
+            <i className="glyphicon glyphicon-pencil"></i>   Редагувати
+          </button>  
         </td>
         <td></td>
       </tr>

@@ -49,17 +49,12 @@ class Admin::SchoolsController < ApplicationController
   end 
 
   def update
-    return redirect_to(admin_schools_path(), notice: "Редагування відмінено користувачем") if params[:commit] == 'Відміна'
     @school = School.find(edit_params[:id])
 
-    respond_to do |format|
-      if @school.update_attributes(update_params)
-        format.html { redirect_to admin_schools_path(), notice: "Профіль школи успішно оновлено!" and return }
-        formar.json { render json: @school, status: :ok }
-      else
-        format.html { redirect_to admin_schools_path(), alert: "Помилка оновлення профіля!" and return }
-        format.json { render json: @school.errors, status: :unprocessable_entity }
-      end    
+    if @school.update_attributes(update_params)
+      render json: @school, status: :ok
+    else
+      render json: @school.errors, status: :unprocessable_entity
     end  
   end 
 
