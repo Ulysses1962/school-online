@@ -66,12 +66,12 @@ class Admin::SchoolsController < ApplicationController
     end  
 
     # Import data
-    #DataImport::school_import(['data/', uploaded_file.original_filename].join)    
+    DataImport::school_import(['data/', uploaded_file.original_filename].join)    
     
     # Removing data file
-    #File.delete(Rails.root.join('data', uploaded_file.original_filename))
+    File.delete(Rails.root.join('data', uploaded_file.original_filename))
     
-    #return redirect_to(admin_schools_path(), notice: "Дані школи імпортовані успішно!")
+    return redirect_to(admin_schools_path(), notice: "Дані школи імпортовані успішно!")
   end  
 
 

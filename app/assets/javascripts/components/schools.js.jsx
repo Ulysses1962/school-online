@@ -28,7 +28,6 @@ class SchoolList extends React.Component {
       contentType: false,
       data: school_data,  
       success: () => {
-        alert('Дані успішно імпортовані');
         this.setState({fileName: ''});
       }
     });
